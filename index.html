@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SW Asia Study Helper</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      font-size: 24px;
+    }
+    .question {
+      margin: 10px 0;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      font-size: 16px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .answer {
+      display: none;
+      padding: 10px;
+      background-color: #e0f7fa;
+      margin-top: 5px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SW Asia Study Helper</h1>
+    <div id="qa-container"></div>
+  </div>
+
+  <script>
+    const facts = {
+      "What religion do most Arabs practice?": "Most Arabs are Muslim, mostly Sunni.",
+      "Are all Arabs Muslim?": "No. Not all Arabs are Muslim, and not all Muslims are Arab.",
+      "What religion do most Persians practice?": "Shi'a Islam.",
+      "What is the holy book of Islam?": "The Quran.",
+      "What religion do most Kurds follow?": "Sunni Islam, but they are often less strict.",
+      "Name the three major religions in SW Asia.": "Judaism, Christianity, Islam.",
+      "What religion uses the Torah?": "Judaism.",
+      "What religion follows Jesus Christ?": "Christianity.",
+      "Which religion believes in one God (Allah) and follows the Five Pillars?": "Islam.",
+      "What language do most Arabs speak?": "Arabic.",
+      "Where do most Persians live?": "Iran.",
+      "What language do Persians speak?": "Farsi (Persian).",
+      "Who are the Kurds?": "An ethnic group in Turkey, Syria, Iraq, and Iran.",
+      "Do Kurds have a country of their own?": "No, they are the largest group without a country.",
+      "What language do Kurds speak?": "Kurdish, related to Farsi.",
+      "Who are Arabs descended from?": "Abraham through Ishmael.",
+      "Why did the U.S. go to war in Iraq in 2003?": "Suspected WMDs & ties to al-Qaeda (Operation Iraqi Freedom).",
+      "What was the goal of Operation Desert Storm?": "Free Kuwait from Iraqi invasion.",
+      "Who was Osama bin Laden?": "Leader of al-Qaeda, behind 9/11 attacks.",
+      "When was bin Laden killed?": "May 2, 2011, in Pakistan.",
+      "What group ruled Afghanistan before U.S. invasion?": "The Taliban."
+    };
+
+    const container = document.getElementById('qa-container');
+
+    for (let question in facts) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'question';
+
+      const button = document.createElement('button');
+      button.innerText = question;
+
+      const answerDiv = document.createElement('div');
+      answerDiv.className = 'answer';
+      answerDiv.innerText = facts[question];
+
+      button.onclick = () => {
+        answerDiv.style.display = answerDiv.style.display === 'none' ? 'block' : 'none';
+      };
+
+      wrapper.appendChild(button);
+      wrapper.appendChild(answerDiv);
+      container.appendChild(wrapper);
+    }
+  </script>
+</body>
+</html>
