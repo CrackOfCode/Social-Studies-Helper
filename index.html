@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SW Asia Study Helper</title>
+  <title>SW Asia Quiz Helper (Multiple Choice)</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -24,85 +24,146 @@
       text-align: center;
       font-size: 24px;
     }
-    .question {
-      margin: 10px 0;
+    .question-box {
+      margin-top: 20px;
     }
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      font-size: 16px;
-      background-color: #4caf50;
-      color: white;
+    .question {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .choice {
+      display: block;
+      background-color: #e8f5e9;
       border: none;
-      border-radius: 8px;
+      padding: 10px;
+      margin: 5px 0;
+      font-size: 16px;
+      border-radius: 6px;
       cursor: pointer;
       transition: background-color 0.2s;
     }
-    button:hover {
-      background-color: #45a049;
+    .choice:hover {
+      background-color: #c8e6c9;
     }
-    .answer {
-      display: none;
-      padding: 10px;
-      background-color: #e0f7fa;
-      margin-top: 5px;
-      border-radius: 6px;
+    #feedback {
+      margin-top: 15px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>SW Asia Study Helper</h1>
-    <div id="qa-container"></div>
+    <h1>SW Asia Quiz Practice</h1>
+    <div class="question-box">
+      <div class="question" id="question"></div>
+      <div id="choices"></div>
+      <div id="feedback"></div>
+    </div>
   </div>
 
   <script>
     const facts = {
-      "What religion do most Arabs practice?": "Most Arabs are Muslim, mostly Sunni.",
-      "Are all Arabs Muslim?": "No. Not all Arabs are Muslim, and not all Muslims are Arab.",
-      "What religion do most Persians practice?": "Shi'a Islam.",
-      "What is the holy book of Islam?": "The Quran.",
-      "What religion do most Kurds follow?": "Sunni Islam, but they are often less strict.",
-      "Name the three major religions in SW Asia.": "Judaism, Christianity, Islam.",
-      "What religion uses the Torah?": "Judaism.",
-      "What religion follows Jesus Christ?": "Christianity.",
-      "Which religion believes in one God (Allah) and follows the Five Pillars?": "Islam.",
-      "What language do most Arabs speak?": "Arabic.",
-      "Where do most Persians live?": "Iran.",
-      "What language do Persians speak?": "Farsi (Persian).",
-      "Who are the Kurds?": "An ethnic group in Turkey, Syria, Iraq, and Iran.",
-      "Do Kurds have a country of their own?": "No, they are the largest group without a country.",
-      "What language do Kurds speak?": "Kurdish, related to Farsi.",
-      "Who are Arabs descended from?": "Abraham through Ishmael.",
-      "Why did the U.S. go to war in Iraq in 2003?": "Suspected WMDs & ties to al-Qaeda (Operation Iraqi Freedom).",
-      "What was the goal of Operation Desert Storm?": "Free Kuwait from Iraqi invasion.",
-      "Who was Osama bin Laden?": "Leader of al-Qaeda, behind 9/11 attacks.",
-      "When was bin Laden killed?": "May 2, 2011, in Pakistan.",
-      "What group ruled Afghanistan before U.S. invasion?": "The Taliban."
+      "What is an ethnic group?": "A group sharing culture, ancestry, language, and traditions.",
+      "What is a religious group?": "A group sharing common beliefs and practices around religion.",
+      "Can people of the same religion be in different ethnic groups?": "Yes",
+      "What are the 3 major ethnic groups in Southwest Asia?": "Arabs, Persians, Kurds",
+      "What are the 3 major religions in Southwest Asia?": "Judaism, Christianity, Islam",
+      "Which ethnic group mainly speaks Arabic?": "Arabs",
+      "Which ethnic group mainly lives in Iran?": "Persians",
+      "Who are the largest ethnic group without a country?": "Kurds",
+      "What religion do most Arabs follow?": "Islam",
+      "What religion do most Persians follow?": "Shi'a Islam",
+      "What religion do most Kurds follow?": "Sunni Islam",
+      "What language do Persians speak?": "Farsi",
+      "What language do Kurds speak?": "Kurdish",
+      "Where do Kurds live?": "Turkey, Syria, Iraq, Iran",
+      "What language do Arabs speak?": "Arabic",
+      "Who are Arabs descended from?": "Abraham through Ishmael",
+      "What sacred text does Judaism follow?": "Torah",
+      "What sacred text does Christianity follow?": "Bible",
+      "What sacred text does Islam follow?": "Quran",
+      "What is the name of the Islamic prophet?": "Muhammad",
+      "Where is the Kaaba located?": "Mecca",
+      "What are the two main branches of Islam?": "Sunni and Shi'a",
+      "Which branch is most common among Arabs?": "Sunni",
+      "What is the Five Pillars of Islam?": "Core practices of Islam",
+      "Who founded Christianity?": "Jesus",
+      "Who founded Judaism?": "Abraham",
+      "Who founded Islam?": "Muhammad",
+      "What year did Iraq invade Kuwait?": "1990",
+      "What was the U.S. response to Iraq invading Kuwait?": "Operation Desert Storm",
+      "What was Iraq's goal in Kuwait?": "Oil and Gulf access",
+      "What did the UN do after Iraq invaded Kuwait?": "Embargo",
+      "What does embargo mean?": "Ban on trade",
+      "Why did the U.S. invade Iraq in 2003?": "WMDs and terrorism",
+      "What was the name of the 2003 Iraq operation?": "Operation Iraqi Freedom",
+      "Who was the Iraqi dictator during the conflicts?": "Saddam Hussein",
+      "When was Saddam Hussein captured?": "2003",
+      "What happened to Saddam Hussein?": "Executed",
+      "What terrorist group attacked the U.S. on 9/11?": "Al-Qaeda",
+      "Who led al-Qaeda?": "Osama bin Laden",
+      "What country was invaded after 9/11?": "Afghanistan",
+      "What was the operation called in Afghanistan?": "Operation Enduring Freedom",
+      "What group ruled Afghanistan before the U.S. invasion?": "Taliban",
+      "What was the U.S. goal in Afghanistan?": "Defeat Taliban and get bin Laden",
+      "When was bin Laden killed?": "2011",
+      "Where was bin Laden found?": "Pakistan",
+      "Why is oil important in SW Asia?": "Drives economy",
+      "Why is there conflict among Muslims in Iraq?": "Sunni vs Shi'a",
+      "When did the U.S. leave Iraq?": "2011",
+      "What year did the U.S. invade Afghanistan?": "2001"
     };
 
-    const container = document.getElementById('qa-container');
+    const allAnswers = Object.values(facts);
+    const questions = Object.keys(facts);
+    let currentIndex = 0;
 
-    for (let question in facts) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'question';
+    const questionDiv = document.getElementById("question");
+    const choicesDiv = document.getElementById("choices");
+    const feedback = document.getElementById("feedback");
 
-      const button = document.createElement('button');
-      button.innerText = question;
-
-      const answerDiv = document.createElement('div');
-      answerDiv.className = 'answer';
-      answerDiv.innerText = facts[question];
-
-      button.onclick = () => {
-        answerDiv.style.display = answerDiv.style.display === 'none' ? 'block' : 'none';
-      };
-
-      wrapper.appendChild(button);
-      wrapper.appendChild(answerDiv);
-      container.appendChild(wrapper);
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
     }
+
+    function showQuestion() {
+      const question = questions[currentIndex];
+      const correct = facts[question];
+
+      questionDiv.innerText = question;
+      feedback.innerText = "";
+      choicesDiv.innerHTML = "";
+
+      const choices = [correct];
+      while (choices.length < 4) {
+        const option = allAnswers[Math.floor(Math.random() * allAnswers.length)];
+        if (!choices.includes(option)) choices.push(option);
+      }
+      shuffle(choices);
+
+      choices.forEach(choice => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.innerText = choice;
+        btn.onclick = () => checkAnswer(choice, correct);
+        choicesDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected, correct) {
+      if (selected === correct) {
+        feedback.innerText = "✅ Correct!";
+      } else {
+        feedback.innerText = `❌ Incorrect. Correct answer: ${correct}`;
+      }
+      currentIndex = (currentIndex + 1) % questions.length;
+      setTimeout(showQuestion, 2000);
+    }
+
+    showQuestion();
   </script>
 </body>
 </html>
